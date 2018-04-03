@@ -45,7 +45,7 @@ var s1 = mongoose.Schema({
 var m1 = mongoose.model("m1", s1);
 
 var i = 0;
-for (i = 0; i < 200; i++){
+for (i = 0; i < 7; i++){
   var _firstName = "firstName" + i;
   var _lastName = "lastNname" + i;
   var _age = 20;

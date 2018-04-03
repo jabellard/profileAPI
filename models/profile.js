@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var collectionName = exports.collection_Name = "profile";
+var collectionName = exports.collectionName = "profile";
 var idLength = exports.idLength = 5;
 
 var profileSchema = mongoose.Schema({
@@ -18,7 +18,7 @@ var profileSchema = mongoose.Schema({
     type: Number,
     required: true,
     min: 1
-  }
+  },
   gender: {
     type: String,
     required: true,
@@ -39,6 +39,8 @@ var profileSchema = mongoose.Schema({
   }
 }, {collection: collectionName});
 
+exports.schemaFields = ["firstName", "lastName", "age", "gender", "id"];
+
 var Profile = exports.Profile = mongoose.model("Profile", profileSchema);
 
 exports.toProfile = function(obj){
@@ -46,12 +48,12 @@ exports.toProfile = function(obj){
     return null;
   }
   else {
-    return ne99 Profile({
-      firstName = obj.firstName;
-      lastName = obj.lastName;
-      age = obj.age;
-      gender = obj.gender;
-      id = obj.id;
+    return new Profile({
+      firstName: obj.firstName,
+      lastName: obj.lastName,
+      age: obj.age,
+      gender: obj.gender,
+      id: obj.id
     });
   }
 }

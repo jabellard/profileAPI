@@ -23,20 +23,25 @@ profileDb.on("open", function(){
   }
 });
 var profileRouter = express.Router();
-
+profileRouter.use("/", function(req, res, next){
+  console.log("mid 1");
+  req._model = profileModel.Profile;
+  next();
+});
+profileRouter.use("/", profileRoute.parseQueryString);
 profileRouter.route("/")
   .get(profileRoute.read)
   .post(profileRoute.create)
   .put(profileRoute.update)
   .delete(profileRoute.delete);
 
-app.use(function(req, res, next){
-  req._model = profileModel.Profile;
-  req._query = {};
-});
 app.use(bodyParser.json());
+app.use(function(req, res, next){
+  console.log("incoming request");
+  next();
+});
 app.use("/profile", profileRouter);
 
 http.createServer(app).listen(app.get("port"), function(){
   console.log("listening on port " + app.get("port") + " ...");
-})
+});
