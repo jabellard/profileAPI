@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 
 exports.read = function(req, res){
-  console.log("read method");
   req._model.find(req._query, {_id: false, __v: false}, function(err, doc){
     if(err){
       cosole.log(err);
@@ -23,13 +22,13 @@ exports.read = function(req, res){
 }
 
 exports.paginate = function(req, res){
-  console.log("paginate methd");
   var options = {
     select: {
-      _id: false
+      _id: false,
+      __v: false
     },
-    page: req.query.page || res.__model.defaultPaginationPage,
-    limit: req.query.limit || res.__model.defaultPaginationLimit
+    page: req.query.page || req.__model.defaultPaginationPage,
+    limit: req.query.limit || req.__model.defaultPaginationLimit
   };
 
   req._model.paginate(req._query, options, function(err, results){
@@ -57,8 +56,6 @@ exports.paginate = function(req, res){
 }
 
 exports.create = function(req, res){
-  console.log("req.body =------------");
-  console.log(req.body);
   var doc = req._doc;
   if(!doc){
     res.status(400);
@@ -70,10 +67,7 @@ exports.create = function(req, res){
   }
   doc.validate(function(err){
     if (err) {
-      console.log("validation error: ------------");
       console.log(err);
-      console.log("validation error: ------------");
-
       res.status(400);
       res.set({
         "Content-Type": "text/plain"
@@ -83,9 +77,7 @@ exports.create = function(req, res){
     else{
       doc.save(function(err){
         if(err){
-          console.log("before-----------------------");
           console.log(err);
-          console.log("after---------------------");
           req._model.findOne({id: doc.id}, function(err, doc){
             if (err) {
               console.log(err);
@@ -96,7 +88,6 @@ exports.create = function(req, res){
               res.send("Internal Sever Error.");
             }
             else {
-              console.log("found doc = " + doc);
               if (doc) {
                 res.status(400);
                 res.set({

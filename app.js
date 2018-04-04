@@ -2,9 +2,12 @@ var http = require("http");
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var parser = require("./modules/parse");
 var profileRoute = require("./routes/profile");
+var userRoute = require("./routes/user");
 var indexRoute = require("./routes/index");
 var profileModel = require("./models/profile");
+var userModel = require("./models/user");
 
 var app = express();
 
@@ -22,26 +25,38 @@ profileDb.on("open", function(){
     console.log(profileModel.collectionName + " collection does not exist.");
   }
 });
+
 var profileRouter = express.Router();
 profileRouter.use("/", function(req, res, next){
-  console.log("mid 1");
   req.__model = profileModel;
   req._model = req.__model.Profile;
+  req._schemaFields = req.__model.searchableSchemaFields;
   next();
 });
-profileRouter.use("/", profileRoute.parseQueryString);
+profileRouter.use("/", parser.parseQueryString);
 profileRouter.route("/")
   .get(profileRoute.read)
   .post(profileRoute.create)
   .put(profileRoute.update)
   .delete(profileRoute.delete);
 
-app.use(bodyParser.json());
-app.use(function(req, res, next){
-  console.log("incoming request");
+var adminRouter = express.Router();
+adminRouter.use("/", function(req, res, next){
+  req.__model = userModel;
+  req._model = req.__model.User;
+  req._schemaFields = req.__model.searchableSchemaFields;
   next();
 });
+adminRouter.use("/", parser.parseQueryString);
+adminRouter.route("/")
+  .get(userRoute.read)
+  .post(userRoute.create)
+  .put(userRoute.update)
+  .delete(userRoute.delete);
+
+app.use(bodyParser.json());
 app.use("/profile", profileRouter);
+app.use("/admin", adminRouter);
 
 http.createServer(app).listen(app.get("port"), function(){
   console.log("listening on port " + app.get("port") + " ...");

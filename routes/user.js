@@ -1,5 +1,5 @@
 var crud = require("../modules/crud");
-var schemaFields = require("../models/profile").schemaFields;
+var schemaFields = require("../models/user").searchableSchemaFields;
 
 exports.read = function(req, res){
   if (req.query.limit || req.query.page) {
@@ -11,7 +11,7 @@ exports.read = function(req, res){
 }
 
 exports.create = function(req, res){
-  req._doc = req.__model.toProfile(req.body);
+  req._doc = req.__model.toUser(req.body);
   crud.create(req, res);
 }
 

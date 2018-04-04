@@ -44,7 +44,7 @@ profileSchema.plugin(mongoosePaginate);
 exports.defaultPaginationLimit = 10;
 exports.defaultPaginationPage = 1;
 
-exports.schemaFields = ["firstName", "lastName", "age", "gender", "id"];
+exports.searchableSchemaFields = ["firstName", "lastName", "age", "gender", "id"];
 
 var Profile = exports.Profile = mongoose.model("Profile", profileSchema);
 

@@ -1,13 +1,15 @@
 var mongoose = require("mongoose");
 var profile = require("./models/profile");
+var user = require("./models/user");
 
 mongoose.connect("mongodb://localhost:27017/profile");
 
 var profileDb = mongoose.connection;
 
-var collectionName = profile.collectionName;
+var collectionNames = [profile.collectionName, user.collectionName];
 var idLength = profile.idLength;
 var Profile = profile.Profile;
+var User = user.User;
 
 profileDb.on("error", function(){
   console.log("failed to connect to profile database");
@@ -15,20 +17,20 @@ profileDb.on("error", function(){
 
 profileDb.on("open", function(){
   console.log("successfully connected to the profile database");
-  if (profileDb.collections[collectionName]) {
-    profileDb.collections[collectionName].drop(function(err){
-      if (err){
-        console.log("failed to drop " + collectionName +  " collection")
-      }
-      else {
-        console.log("dropped " + collectionName + " collection");
-      }
+  for(var i = 0; i < collectionNames.length; i++){
+    if (profileDb.collections[collectionNames[i]]) {
+      profileDb.collections[collectionNames[i]].drop(function(err){
+        if (err){
+          console.log("failed to drop " + collectionNames[i] +  " collection")
+        }
+        else {
+          console.log("dropped " + collectionNames[i] + " collection");
+        }
 
-    })
+      })
+    }
   }
 });
-
-
 
 function randomNumberK(k){
   var factor = 1;
@@ -38,14 +40,7 @@ function randomNumberK(k){
   return Math.floor(factor + Math.random() * (9 * factor));
 }
 
-var s1 = mongoose.Schema({
-  name: String
-}, {collection: collectionName})
-
-var m1 = mongoose.model("m1", s1);
-
-var i = 0;
-for (i = 0; i < 200; i++){
+for (var i = 0; i < 200; i++){
   var _firstName = "firstName" + i;
   var _lastName = "lastNname" + i;
   var _age = 20;
@@ -60,16 +55,35 @@ for (i = 0; i < 200; i++){
     id: _id
   });
 
-  var mk = new m1({
-    name: "name" + randomNumberK(0)
-  });
-
   profilek.save(function(err, profile){
     if (err){
-      console.log("failed to save document");
+      console.log("failed to save profile document");
     }
     else {
       console.log("saved profile document");
     }
   })
+}
+
+for(var j = 0; j < 200; j++){
+  var _userName = "user" + j;
+  var _password = "pass" + j;
+  var _admin = false;
+  if (j % 2 == 0) {
+    _admin = true;
+  }
+  var userk = new User({
+    username: _userName,
+    password: _password,
+    admin: _admin
+  });
+
+  userk.save(function(err, user){
+    if (err) {
+      console.log("Failed to save user document");
+    }
+    else{
+      console.log("Saved user document");
+    }
+  });
 }
