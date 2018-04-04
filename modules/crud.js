@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var profileModel = require("../models/profile");
 
 exports.read = function(req, res){
+  console.log("read method");
   req._model.find(req._query, {_id: false, __v: false}, function(err, doc){
     if(err){
       cosole.log(err);
@@ -23,7 +24,37 @@ exports.read = function(req, res){
 }
 
 exports.paginate = function(req, res){
-;
+  console.log("paginate methd");
+  var options = {
+    select: {
+      _id: false
+    },
+    page: req.query.page || profileModel.defaultPaginationPage,
+    limit: req.query.limit || profileModel.defaultPaginationLimit
+  };
+
+  req._model.paginate(req._query, options, function(err, results){
+    if (err) {
+      console.log(err);
+      res.status(500);
+      res.set({
+        "Content-Type": "text/plain"
+      });
+      res.send("Internal Sever Error");
+      res.end();
+    }
+    else {
+      res.status(200);
+      res.json({
+        totalDocs: results.total,
+        totalPages: results.pages,
+        docsPerPage: results.limit,
+        currentPage: results.page,
+        results: results.docs
+      });
+      res.end();
+    }
+  })
 }
 
 exports.create = function(req, res){

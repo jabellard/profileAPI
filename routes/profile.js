@@ -3,7 +3,16 @@ var schemaFields = require("../models/profile").schemaFields;
 
 exports.read = function(req, res){
   console.log("get request");
-  crud.read(req, res);
+  if (req.query.limit || req.query.page) {
+    console.log("pagiantion request");
+    console.log("limit = " + req.query.limit);
+    console.log("page = " + req.query.page);
+
+    crud.paginate(req, res);
+  }
+  else {
+    crud.read(req, res);
+  }
 }
 
 exports.create = function(req, res){

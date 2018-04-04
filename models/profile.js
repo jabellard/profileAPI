@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var mongoosePaginate = require("mongoose-paginate");
 
 var collectionName = exports.collectionName = "profile";
 var idLength = exports.idLength = 5;
@@ -38,6 +39,10 @@ var profileSchema = mongoose.Schema({
     }
   }
 }, {collection: collectionName});
+profileSchema.plugin(mongoosePaginate);
+
+exports.defaultPaginationLimit = 10;
+exports.defaultPaginationPage = 1;
 
 exports.schemaFields = ["firstName", "lastName", "age", "gender", "id"];
 
