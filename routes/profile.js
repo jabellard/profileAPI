@@ -16,6 +16,7 @@ exports.read = function(req, res){
 }
 
 exports.create = function(req, res){
+  req._doc = req.__model.toProfile(req.body);
   crud.create(req, res);
 }
 

@@ -25,7 +25,8 @@ profileDb.on("open", function(){
 var profileRouter = express.Router();
 profileRouter.use("/", function(req, res, next){
   console.log("mid 1");
-  req._model = profileModel.Profile;
+  req.__model = profileModel;
+  req._model = req.__model.Profile;
   next();
 });
 profileRouter.use("/", profileRoute.parseQueryString);

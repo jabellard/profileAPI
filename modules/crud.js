@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-var profileModel = require("../models/profile");
 
 exports.read = function(req, res){
   console.log("read method");
@@ -29,8 +28,8 @@ exports.paginate = function(req, res){
     select: {
       _id: false
     },
-    page: req.query.page || profileModel.defaultPaginationPage,
-    limit: req.query.limit || profileModel.defaultPaginationLimit
+    page: req.query.page || res.__model.defaultPaginationPage,
+    limit: req.query.limit || res.__model.defaultPaginationLimit
   };
 
   req._model.paginate(req._query, options, function(err, results){
@@ -60,7 +59,7 @@ exports.paginate = function(req, res){
 exports.create = function(req, res){
   console.log("req.body =------------");
   console.log(req.body);
-  var doc = profileModel.toProfile(req.body);
+  var doc = req._doc;
   if(!doc){
     res.status(400);
     res.set({
