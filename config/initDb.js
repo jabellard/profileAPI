@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var profile = require("../models/profile");
 var user = require("../models/user");
+var bcrypt = require("bcrypt-nodejs");
 
 mongoose.connect("mongodb://localhost:27017/profile");
 
@@ -67,15 +68,17 @@ for (var i = 0; i < NUM_DOCS; i++){
 }
 
 for(var j = 0; j < NUM_DOCS; j++){
-  var _userName = "user" + j;
-  var _password = "pass" + j;
+  var _userName = "_____user" + j;
+  var _password = "_____pass" + j;
+  var salt = bcrypt.genSaltSync(10);
+  var _hash_password = bcrypt.hashSync(_password, salt);
   var _admin = false;
   if (j % 2 == 0) {
     _admin = true;
   }
   var userk = new User({
     username: _userName,
-    password: _password,
+    password: _hash_password,
     admin: _admin
   });
 

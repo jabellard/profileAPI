@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var mongoosePaginate = require("mongoose-paginate");
+var bcrypt = require("bcrypt-nodejs");
 
 var collectionName = exports.collectionName = "user";
 
@@ -7,11 +8,13 @@ var userSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
+    minlength: 5,
     unique: true
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5
   },
   admin: {
     type: Boolean,
@@ -42,6 +45,21 @@ exports.toDoc = function(obj){
 }
 
 exports.updateDoc = function(doc, obj){
-  doc.password = obj.password;
-  doc.admin = obj.admin;
+  if (obj.username) {
+    doc.username = obj.username;
+  }
+  if (obj.password) {
+    var salt = bcrypt.genSaltSync(5);
+    bcrypt.hash(obj.password, salt, null, function(err, hash){
+      if (err) {
+        throw( new Error("Hashing error."));
+      }
+      else {
+        doc.password = hash;
+      }
+    });
+  }
+  if (obj.admin) {
+    doc.admin = obj.admin;
+  }
 }

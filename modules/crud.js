@@ -135,7 +135,17 @@ exports.update = function(req, res){
     }
     else {
       if (doc) {
-        req.__model.updateDoc(doc, req.body);
+        try {
+          req.__model.updateDoc(doc, req.body);
+        } catch (err) {
+          console.log(err);
+          res.status(500);
+          res.set({
+            "Content-Type": "text/pain"
+          });
+          res.send("Internal Sever Error.");
+        }
+
         doc.validate(function(err){
           if(err){
             console.log(err);
