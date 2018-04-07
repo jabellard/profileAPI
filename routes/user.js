@@ -11,7 +11,7 @@ exports.read = function(req, res){
 }
 
 exports.create = function(req, res){
-  req._doc = req.__model.toUser(req.body);
+  req._doc = req.__model.toDoc(req.body);
   crud.create(req, res);
 }
 

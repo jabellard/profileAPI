@@ -23,10 +23,11 @@ exports.defaultPaginationLimit = 10;
 exports.defaultPaginationPage = 1;
 
 exports.searchableSchemaFields = ["username", "admin"];
+exports.ID = "username";
 
 var User = exports.User = mongoose.model("User", userSchema);
 
-exports.toUser = function(obj){
+exports.toDoc = function(obj){
   if(!obj){
     return null;
   }
@@ -37,4 +38,9 @@ exports.toUser = function(obj){
       admin: obj.admin
     });
   }
+}
+
+exports.updateDoc = function(doc, obj){
+  doc.password = obj.password;
+  doc.admin = obj.admin;
 }

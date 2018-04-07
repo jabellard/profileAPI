@@ -78,7 +78,7 @@ exports.create = function(req, res){
       doc.save(function(err){
         if(err){
           console.log(err);
-          req._model.findOne({id: doc.id}, function(err, doc){
+          req._model.findOne({id: doc[req._ID]}, function(err, doc){
             if (err) {
               console.log(err);
               res.status(500);
@@ -93,7 +93,7 @@ exports.create = function(req, res){
                 res.set({
                   "Content-Type": "text/pain"
                 })
-                res.send("Bad Request: Document with id " + doc.id + " already exists.");
+                res.send("Bad Request: Document with ID " + doc.[req._ID] + " already exists.");
               }
               else {
                 res.status(500);
@@ -111,7 +111,7 @@ exports.create = function(req, res){
           res.set({
             "Content-Type": "text/pain"
           })
-          res.send("Created document with id " + doc.id + ".");
+          res.send("Created document with ID " + doc.[req._ID] + ".");
         }
       });
     }
@@ -120,7 +120,7 @@ exports.create = function(req, res){
 }
 
 exports.update = function(req, res){
-  req._model.findOne({id: req._query.id}, function(err, doc){
+  req._model.findOne({id: req._id}, function(err, doc){
     if (err) {
       console.log(err);
       res.status(500);
@@ -131,10 +131,7 @@ exports.update = function(req, res){
     }
     else {
       if (doc) {
-        doc.firstName = req.body.firstName;
-        doc.lastName = req.body.lastName;
-        doc.age = req.body.age;
-        doc.gender = req.body.gender;
+        req.__model.updateDoc(doc, req.body);
         doc.validate(function(err){
           if(err){
             console.log(err);
@@ -159,7 +156,7 @@ exports.update = function(req, res){
                 res.set({
                   "Content-Type": "text/pain"
                 });
-                res.send("Updated document with id " + req._query.id + ".");
+                res.send("Updated document with ID " + req._id + ".");
               }
             });
           }
@@ -171,14 +168,14 @@ exports.update = function(req, res){
         res.set({
           "Content-Type": "text/pain"
         });
-        res.send("Bad Request: Document with id " + req._query.id + " does not exist.");
+        res.send("Bad Request: Document with ID " + req._id + " does not exist.");
       }
     }
   })
 }
 
 exports.delete = function(req, res){
-  req._model.findOne({id: req._query.id}, function(err, doc){
+  req._model.findOne({id: req._id}, function(err, doc){
     if (err) {
       console.log(err);
       res.status(500);
@@ -203,7 +200,7 @@ exports.delete = function(req, res){
             res.set({
               "Content-Type": "text/pain"
             });
-            res.send("Removed document with id " + req._query.id + ".");
+            res.send("Removed document with ID " + req._id + ".");
           }
         })
       }
@@ -212,7 +209,7 @@ exports.delete = function(req, res){
         res.set({
           "Content-Type": "text/pain"
         });
-        res.send("Document with id " + req._query.id + " does not exist.");
+        res.send("Document with ID " + req._id + " does not exist.");
       }
     }
   })

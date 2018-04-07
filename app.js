@@ -29,8 +29,10 @@ profileDb.on("open", function(){
 var profileRouter = express.Router();
 profileRouter.use("/", function(req, res, next){
   req.__model = profileModel;
-  req._model = req.__model.Profile;
-  req._schemaFields = req.__model.searchableSchemaFields;
+  req._model = profileModel.Profile;
+  req._schemaFields = profileModel.searchableSchemaFields;
+  req._ID = profileModel.ID;
+  req._id = req.query.id;
   next();
 });
 profileRouter.use("/", parser.parseQueryString);
@@ -43,8 +45,10 @@ profileRouter.route("/")
 var adminRouter = express.Router();
 adminRouter.use("/", function(req, res, next){
   req.__model = userModel;
-  req._model = req.__model.User;
-  req._schemaFields = req.__model.searchableSchemaFields;
+  req._model = userModel.User;
+  req._schemaFields = userModel.searchableSchemaFields;
+  req._ID = userModel.ID;
+  req._id = req.query.username;
   next();
 });
 adminRouter.use("/", parser.parseQueryString);

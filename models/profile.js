@@ -45,10 +45,11 @@ exports.defaultPaginationLimit = 10;
 exports.defaultPaginationPage = 1;
 
 exports.searchableSchemaFields = ["firstName", "lastName", "age", "gender", "id"];
+exports.ID = "id";
 
 var Profile = exports.Profile = mongoose.model("Profile", profileSchema);
 
-exports.toProfile = function(obj){
+exports.toDoc = function(obj){
   if (!obj) {
     return null;
   }
@@ -61,4 +62,11 @@ exports.toProfile = function(obj){
       id: obj.id
     });
   }
+}
+
+exports.updateDoc = function(doc, obj){
+  doc.firstName = obj.firstName;
+  doc.lastName = obj.lastName;
+  doc.age = obj.age;
+  doc.gender = obj.gender;
 }
