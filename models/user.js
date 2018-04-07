@@ -6,7 +6,8 @@ var collectionName = exports.collectionName = "user";
 var userSchema = mongoose.Schema({
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,

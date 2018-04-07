@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
-var profile = require("./models/profile");
-var user = require("./models/user");
+var profile = require("../models/profile");
+var user = require("../models/user");
 
 mongoose.connect("mongodb://localhost:27017/profile");
 
@@ -10,6 +10,7 @@ var collectionNames = [profile.collectionName, user.collectionName];
 var idLength = profile.idLength;
 var Profile = profile.Profile;
 var User = user.User;
+var NUM_DOCS = 10;
 
 profileDb.on("error", function(){
   console.log("failed to connect to profile database");
@@ -40,7 +41,7 @@ function randomNumberK(k){
   return Math.floor(factor + Math.random() * (9 * factor));
 }
 
-for (var i = 0; i < 200; i++){
+for (var i = 0; i < NUM_DOCS; i++){
   var _firstName = "firstName" + i;
   var _lastName = "lastNname" + i;
   var _age = 20;
@@ -65,7 +66,7 @@ for (var i = 0; i < 200; i++){
   })
 }
 
-for(var j = 0; j < 200; j++){
+for(var j = 0; j < NUM_DOCS; j++){
   var _userName = "user" + j;
   var _password = "pass" + j;
   var _admin = false;

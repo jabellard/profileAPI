@@ -78,7 +78,9 @@ exports.create = function(req, res){
       doc.save(function(err){
         if(err){
           console.log(err);
-          req._model.findOne({id: doc[req._ID]}, function(err, doc){
+          var query = {};
+          query[req._ID] = doc[req._ID];
+          req._model.findOne(query, function(err, doc){
             if (err) {
               console.log(err);
               res.status(500);
@@ -93,7 +95,7 @@ exports.create = function(req, res){
                 res.set({
                   "Content-Type": "text/pain"
                 })
-                res.send("Bad Request: Document with ID " + doc.[req._ID] + " already exists.");
+                res.send("Bad Request: Document with ID " + doc[req._ID] + " already exists.");
               }
               else {
                 res.status(500);
@@ -111,7 +113,7 @@ exports.create = function(req, res){
           res.set({
             "Content-Type": "text/pain"
           })
-          res.send("Created document with ID " + doc.[req._ID] + ".");
+          res.send("Created document with ID " + doc[req._ID] + ".");
         }
       });
     }
@@ -120,7 +122,9 @@ exports.create = function(req, res){
 }
 
 exports.update = function(req, res){
-  req._model.findOne({id: req._id}, function(err, doc){
+  var query = {};
+  query[req._ID] = req._id;
+  req._model.findOne(query, function(err, doc){
     if (err) {
       console.log(err);
       res.status(500);
@@ -175,7 +179,9 @@ exports.update = function(req, res){
 }
 
 exports.delete = function(req, res){
-  req._model.findOne({id: req._id}, function(err, doc){
+  var query = {};
+  query[req._ID] = req._id;
+  req._model.findOne(query, function(err, doc){
     if (err) {
       console.log(err);
       res.status(500);
