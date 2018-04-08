@@ -50,8 +50,8 @@ profileRouter.route("/")
   .put(auth.authorize, profileRoute.update)
   .delete(auth.authorize, profileRoute.delete);
 
-var adminRouter = express.Router();
-adminRouter.use("/", function(req, res, next){
+var userRouter = express.Router();
+userRouter.use("/", function(req, res, next){
   req.__model = userModel;
   req._model = userModel.User;
   req._schemaFields = userModel.searchableSchemaFields;
@@ -60,8 +60,8 @@ adminRouter.use("/", function(req, res, next){
   req._admin = true;
   next();
 });
-adminRouter.use("/", parser.parseQueryString);
-adminRouter.route("/")
+userRouter.use("/", parser.parseQueryString);
+userRouter.route("/")
   .get(auth.authorize, userRoute.read)
   .post(auth.authorize, userRoute.create)
   .put(auth.authorize, userRoute.update)
@@ -89,8 +89,8 @@ loginRouter.route("/")
   .post(loginRoute.login);
 
 app.use(bodyParser.json());
-app.use("/profile", profileRouter);
-app.use("/admin", adminRouter);
+app.use("/profiles", profileRouter);
+app.use("/users", userRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 
