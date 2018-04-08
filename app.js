@@ -64,10 +64,6 @@ adminRouter.use("/", parser.parseQueryString);
 adminRouter.route("/")
   .get(auth.authorize, userRoute.read)
   .post(auth.authorize, userRoute.create)
-  .put(function(req, res, next){
-    req._admin = false;
-    next();
-  })
   .put(auth.authorize, userRoute.update)
   .delete(auth.authorize, userRoute.delete);
 

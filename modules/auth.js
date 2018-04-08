@@ -79,30 +79,28 @@ exports.authorize = function(req, res, next){
   console.log("Auth Header: --------------");
   console.log(authHeader);
   console.log("Auth Header: --------------");
-  if(req.method == "GET"){
-    next();
+
+  if (!authHeader) {
+    res.status(401);
+    res.set({
+      "Content-Type": "text/pain"
+    });
+    res.send("Unauthorized.");
   }
   else {
-    if (!authHeader) {
-      res.status(401);
-      res.set({
-        "Content-Type": "text/pain"
-      });
-      res.send("Unauthorized.");
-    }
-    else {
-      var token = authHeader.split(" ")[1];
-      jwt.verify(token, secretKey, function(err, payload){
-        if (err) {
-          res.status(401);
-          res.set({
-            "Content-Type": "text/pain"
-          });
-          res.send("Unauthorized.");
-        }
-        else {
+    var token = authHeader.split(" ")[1];
+    jwt.verify(token, secretKey, function(err, payload){
+      if (err) {
+        res.status(401);
+        res.set({
+          "Content-Type": "text/pain"
+        });
+        res.send("Unauthorized.");
+      }
+      else {
+        if (!payload.admin && req._admin) {
           if (req.baseUrl == "/admin" && (req.method == "PUT" || req.method == "DELETE")) {
-            if (req.body.username == req.query.username) {
+            if (payload.username == req.query.username) {
               next()
             }
             else {
@@ -113,18 +111,18 @@ exports.authorize = function(req, res, next){
               res.send("Unauthorized.");
             }
           }
-          else if(req._admin && !payload.admin){
+          else {
             res.status(401);
             res.set({
               "Content-Type": "text/pain"
             });
             res.send("Unauthorized.");
           }
-          else {
-            next();
-          }
         }
-      });
-    }
+        else {
+          next();
+        }
+      }
+    });
   }
 }

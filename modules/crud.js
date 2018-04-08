@@ -63,7 +63,7 @@ exports.create = function(req, res){
     res.set({
       "Content-Type": "text/plain"
     })
-    res.send("Bad Request: Invalid document.");
+    res.send("Bad Request: Invalid document1.");
     return;
   }
   doc.validate(function(err){
@@ -73,7 +73,7 @@ exports.create = function(req, res){
       res.set({
         "Content-Type": "text/plain"
       });
-      res.send("Bad Request: Invalid document.");
+      res.send("Bad Request: Invalid document2.");
     }
     else{
       doc.save(function(err){

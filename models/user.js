@@ -45,9 +45,6 @@ exports.toDoc = function(obj){
 }
 
 exports.updateDoc = function(doc, obj){
-  if (obj.username) {
-    doc.username = obj.username;
-  }
   if (obj.password) {
     var salt = bcrypt.genSaltSync(5);
     bcrypt.hash(obj.password, salt, null, function(err, hash){
