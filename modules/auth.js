@@ -101,6 +101,7 @@ exports.authorize = function(req, res, next){
         if (!payload.admin && req._admin) {
           if (req.baseUrl == "/admin" && (req.method == "PUT" || req.method == "DELETE")) {
             if (payload.username == req.query.username) {
+              req.body.admin = payload.admin;
               next()
             }
             else {
