@@ -68,8 +68,8 @@ for (var i = 0; i < NUM_DOCS; i++){
 }
 
 for(var j = 0; j < NUM_DOCS; j++){
-  var _userName = "_____user" + j;
-  var _password = "_____pass" + j;
+  var _userName = "sampleuser" + j;
+  var _password = "samplepass" + j;
   var salt = bcrypt.genSaltSync(10);
   var _hash_password = bcrypt.hashSync(_password, salt);
   var _admin = false;
