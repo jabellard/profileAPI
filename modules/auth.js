@@ -1,8 +1,7 @@
 var mongoose = require("mongoose");
 var bcrypt = require("bcrypt-nodejs");
 var jwt = require("jsonwebtoken");
-
-var secretKey = "secret";
+var secretKey = require("../config/keys").secretKey;
 
 exports.authenticate = function(req, res){
   req._model.findOne({username: req.body.username}, function(err, doc){

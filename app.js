@@ -12,7 +12,7 @@ var profileModel = require("./models/profile");
 var userModel = require("./models/user");
 var auth = require("./modules/auth");
 
-var app = express();
+var app = exports.app = express();
 
 app.set("port", process.env.PORT || 3000);
 
