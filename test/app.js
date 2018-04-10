@@ -22,6 +22,8 @@ var regularToken = jwt.sign(regularPayload, secretKey);
 
 var invalidToken = "fjfj" + regularToken + "dkfdkf";
 
+var validIdQuery = 22821;
+
 var requester = supertest(app);
 
 describe("REstful API", function(){
@@ -60,8 +62,8 @@ describe("REstful API", function(){
           .post("/profiles")
           .set("Authorization", "Bearer " + adminToken)
           .send({
-            firstname: "testuser1_first",
-            lastname: "testuser1_last",
+            firstName: "testuser1_first",
+            lastName: "testuser1_last",
             age: 45,
             gender: "M",
             id: 34343
@@ -75,8 +77,8 @@ describe("REstful API", function(){
         requester
         .post("/profiles")
         .send({
-          firstname: "testuser2_first",
-          lastname: "testuser2_last",
+          firstName: "testuser2_first",
+          lastName: "testuser2_last",
           age: 45,
           gender: "M",
           id: 34343
@@ -91,8 +93,8 @@ describe("REstful API", function(){
         .post("/profiles")
         .set("Authorization", "Bearer " + invalidToken)
         .send({
-          firstname: "testuser1_first",
-          lastname: "testuser1_last",
+          firstName: "testuser11_first",
+          lastName: "testuser11_last",
           age: 45,
           gender: "M",
           id: 34343
@@ -107,8 +109,8 @@ describe("REstful API", function(){
         .post("/profiles")
         .set("Authorization", "Bearer " + regularToken)
         .send({
-          firstname: "testuser1_first",
-          lastname: "testuser1_last",
+          firstName: "testuser111_first",
+          lastName: "testuser111_last",
           age: 45,
           gender: "M",
           id: 34343
@@ -132,7 +134,7 @@ describe("REstful API", function(){
         .post("/profiles")
         .set("Authorization", "Bearer " + adminToken)
         .send({
-          firstname: "testuser1_first",
+          firstName: "testuser11_first",
           age: 45,
           gender: "M",
           id: 34343
@@ -148,7 +150,7 @@ describe("REstful API", function(){
         requester
           .put("/profiles")
           .query({
-            id: "sampleuser3"
+            id: validIdQuery
           })
           .set("Authorization", "Bearer " + adminToken)
           .send({})
@@ -171,7 +173,7 @@ describe("REstful API", function(){
         requester
         .put("/profiles")
         .query({
-          id: "dfkfkfkd"
+          id: 23232
         })
         .set("Authorization", "Bearer " + adminToken)
         .send({})
@@ -184,7 +186,7 @@ describe("REstful API", function(){
         requester
         .put("/profiles")
         .query({
-          id: "sampleuser3"
+          id: 23233
         })
         .send({})
         .end(function(err, res){
@@ -196,7 +198,7 @@ describe("REstful API", function(){
         requester
         .put("/profiles")
         .query({
-          id: "sampleuser3"
+          id: 23232
         })
         .set("Authorization", "Bearer " + invalidToken)
         .send({})
@@ -209,7 +211,7 @@ describe("REstful API", function(){
         requester
         .put("/profiles")
         .query({
-          id: "sampleuser3"
+          id: 23233
         })
         .set("Authorization", "Bearer " + regularToken)
         .send({})
@@ -224,7 +226,7 @@ describe("REstful API", function(){
         requester
           .delete("/profiles")
           .query({
-            id: "sampleuser3"
+            id: validIdQuery
           })
           .set("Authorization", "Bearer " + adminToken)
           .end(function(err, res){
@@ -245,7 +247,7 @@ describe("REstful API", function(){
         requester
         .delete("/profiles")
         .query({
-          id: "dfkfkfkd"
+          id: 23233
         })
         .set("Authorization", "Bearer " + adminToken)
         .end(function(err, res){
@@ -257,7 +259,7 @@ describe("REstful API", function(){
         requester
         .delete("/profiles")
         .query({
-          id: "sampleuser3"
+          id: 23233
         })
         .end(function(err, res){
           expect(res.status).to.equal(401);
@@ -268,7 +270,7 @@ describe("REstful API", function(){
         requester
         .delete("/profiles")
         .query({
-          id: "sampleuser3"
+          id: 23233
         })
         .set("Authorization", "Bearer " + invalidToken)
         .end(function(err, res){
@@ -280,7 +282,7 @@ describe("REstful API", function(){
         requester
         .delete("/profiles")
         .query({
-          id: "sampleuser3"
+          id: 23233
         })
         .set("Authorization", "Bearer " + regularToken)
         .end(function(err, res){
@@ -336,7 +338,7 @@ describe("REstful API", function(){
           .set("Authorization", "Bearer " + adminToken)
           .send({
             username: "testuser1",
-            password: "pass",
+            password: "passsss",
             admin: false
           })
           .end(function(err, res){
@@ -347,10 +349,9 @@ describe("REstful API", function(){
       it("failure -- missing auth", function(done){
         requester
         .post("/users")
-        .set("Authorization", "Bearer " + adminToken)
         .send({
-          username: "testuser1",
-          password: "pass",
+          username: "testuser2",
+          password: "passsss",
           admin: false
         })
         .end(function(err, res){
@@ -363,8 +364,8 @@ describe("REstful API", function(){
         .post("/users")
         .set("Authorization", "Bearer " + invalidToken)
         .send({
-          username: "testuser1",
-          password: "pass",
+          username: "testuser3",
+          password: "passsss",
           admin: false
         })
         .end(function(err, res){
@@ -377,8 +378,8 @@ describe("REstful API", function(){
         .post("/users")
         .set("Authorization", "Bearer " + regularToken)
         .send({
-          username: "testuser1",
-          password: "pass",
+          username: "testuser4",
+          password: "passsss",
           admin: false
         })
         .end(function(err, res){
@@ -545,7 +546,7 @@ describe("REstful API", function(){
             password: "passssssss"
           })
           .end(function(err, res){
-            expect(res.status.to.equal(200);
+            expect(res.status).to.equal(200);
             done();
           });
       });
@@ -567,8 +568,8 @@ describe("REstful API", function(){
         requester
           .post("/login")
           .send({
-            username: "sampleuser3",
-            password: "samplepass3"
+            username: "sampleuser1",
+            password: "samplepass1"
           })
           .end(function(err, res){
             expect(res.status).to.equal(200);

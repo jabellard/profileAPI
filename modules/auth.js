@@ -75,10 +75,6 @@ exports.authenticate = function(req, res){
 
 exports.authorize = function(req, res, next){
   var authHeader = req.get("authorization");
-  console.log("Auth Header: --------------");
-  console.log(authHeader);
-  console.log("Auth Header: --------------");
-
   if (!authHeader) {
     res.status(401);
     res.set({

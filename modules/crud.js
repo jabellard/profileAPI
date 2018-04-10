@@ -57,7 +57,6 @@ exports.paginate = function(req, res){
 
 exports.create = function(req, res){
   var doc = req._doc;
-  console.log(doc);
   if(!doc){
     res.status(400);
     res.set({
