@@ -11,7 +11,7 @@ var collectionNames = [profile.collectionName, user.collectionName];
 var idLength = profile.idLength;
 var Profile = profile.Profile;
 var User = user.User;
-var NUM_DOCS = 50;
+var NUM_DOCS = 20;
 
 profileDb.on("error", function(){
   console.log("failed to connect to profile database");
@@ -26,8 +26,6 @@ profileDb.on("open", function(){
       profileDb.collections[collectionNames[i]].drop(function(err){
         if (err){
           console.log("failed to drop " + collectionNames[i] +  " collection")
-          console.log("exiting 99ith failure...");
-          process.exit(1);
         }
         else {
           console.log("dropped " + collectionNames[i] + " collection");
@@ -69,7 +67,7 @@ for (var i = 0; i < NUM_DOCS; i++){
       console.log("saved profile document");
       console.log("id of " + profile.firstName + " = " + profile.id);
     }
-  })
+  });
 }
 
 for(var j = 0; j < NUM_DOCS; j++){
@@ -97,5 +95,4 @@ for(var j = 0; j < NUM_DOCS; j++){
   });
 }
 
-console.log("exiting 99ith success...");
-//process.exit(0);
+//mongoose.disconnect();
