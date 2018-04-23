@@ -19,10 +19,13 @@ var regularPayload = {
 };
 
 var regularToken = jwt.sign(regularPayload, secretKey);
-
 var invalidToken = "fjfj" + regularToken + "dkfdkf";
 
-var validIdQuery = 22821;
+var validIdQuery = 32760;
+var invalidIdQuery = 888888;
+
+var validUsernameQuery = "sampleuser3";
+var invalidUsernameQuery = "kjhggjkhjhjhh";
 
 var requester = supertest(app);
 
@@ -145,13 +148,50 @@ describe("REstful API", function(){
         });
       });
     });
+  });
+
+  describe("/profiles/{id} route", function(){
+    describe("GET", function(){
+      it("success -- valid query, and  auth", function(done){
+        requester
+          .get("/profiles/" + validIdQuery)
+          .set("Authorization", "Bearer " + regularToken)
+          .end(function(err, res){
+            expect(res.status).to.equal(200);
+            done();
+          });
+      });
+      it("failure -- invalid query", function(done){
+        requester
+          .get("/profiles/" + invalidIdQuery)
+          .set("Authorization", "Bearer " + regularToken)
+          .end(function(err, res){
+            expect(res.status).to.equal(400);
+            done();
+          });
+      });
+      it("failure -- missing auth", function(done){
+        requester
+          .get("/profiles/" + validIdQuery)
+          .end(function(err, res){
+            expect(res.status).to.equal(401);
+            done();
+          });
+      });
+      it("failure -- invalid auth (bad token)", function(done){
+        requester
+          .get("/profiles/" + validIdQuery)
+          .set("Authorization", "Bearer " + invalidToken)
+          .end(function(err, res){
+            expect(res.status).to.equal(401);
+            done();
+          });
+      });
+    });
     describe("PUT", function(){
       it("success -- valid query, and auth", function(done){
         requester
-          .put("/profiles")
-          .query({
-            id: validIdQuery
-          })
+          .put("/profiles/" + validIdQuery)
           .set("Authorization", "Bearer " + adminToken)
           .send({})
           .end(function(err, res){
@@ -159,22 +199,9 @@ describe("REstful API", function(){
             done();
           });
       });
-      it("failure -- missing query", function(done){
-        requester
-        .put("/profiles")
-        .set("Authorization", "Bearer " + adminToken)
-        .send({})
-        .end(function(err, res){
-          expect(res.status).to.equal(400);
-          done();
-        });
-      });
       it("failure -- invalid query", function(done){
         requester
-        .put("/profiles")
-        .query({
-          id: 23232
-        })
+        .put("/profiles/" + invalidIdQuery)
         .set("Authorization", "Bearer " + adminToken)
         .send({})
         .end(function(err, res){
@@ -184,10 +211,7 @@ describe("REstful API", function(){
       });
       it("failure -- missing auth", function(done){
         requester
-        .put("/profiles")
-        .query({
-          id: 23233
-        })
+        .put("/profiles/" + validIdQuery)
         .send({})
         .end(function(err, res){
           expect(res.status).to.equal(401);
@@ -196,10 +220,7 @@ describe("REstful API", function(){
       });
       it("failure -- invalid auth (bad token)", function(done){
         requester
-        .put("/profiles")
-        .query({
-          id: 23232
-        })
+        .put("/profiles/" + validIdQuery)
         .set("Authorization", "Bearer " + invalidToken)
         .send({})
         .end(function(err, res){
@@ -209,10 +230,7 @@ describe("REstful API", function(){
       });
       it("failure -- invalid auth (non-admin token)", function(done){
         requester
-        .put("/profiles")
-        .query({
-          id: 23233
-        })
+        .put("/profiles/" + validIdQuery)
         .set("Authorization", "Bearer " + regularToken)
         .send({})
         .end(function(err, res){
@@ -224,31 +242,16 @@ describe("REstful API", function(){
     describe("DELETE", function(){
       it("success -- valid query and auth", function(done){
         requester
-          .delete("/profiles")
-          .query({
-            id: validIdQuery
-          })
+          .delete("/profiles/" + validIdQuery)
           .set("Authorization", "Bearer " + adminToken)
           .end(function(err, res){
             expect(res.status).to.equal(200);
             done();
           });
       });
-      it("failure -- missing query", function(done){
-        requester
-        .delete("/profiles")
-        .set("Authorization", "Bearer " + adminToken)
-        .end(function(err, res){
-          expect(res.status).to.equal(400);
-          done();
-        });
-      });
       it("failure -- invalid query", function(done){
         requester
-        .delete("/profiles")
-        .query({
-          id: 23233
-        })
+        .delete("/profiles/" + invalidIdQuery)
         .set("Authorization", "Bearer " + adminToken)
         .end(function(err, res){
           expect(res.status).to.equal(400);
@@ -257,10 +260,7 @@ describe("REstful API", function(){
       });
       it("failure -- missing auth", function(done){
         requester
-        .delete("/profiles")
-        .query({
-          id: 23233
-        })
+        .delete("/profiles/" + validIdQuery)
         .end(function(err, res){
           expect(res.status).to.equal(401);
           done();
@@ -268,10 +268,7 @@ describe("REstful API", function(){
       });
       it("failure -- invalid auth (bad token)", function(done){
         requester
-        .delete("/profiles")
-        .query({
-          id: 23233
-        })
+        .delete("/profiles/" + validIdQuery)
         .set("Authorization", "Bearer " + invalidToken)
         .end(function(err, res){
           expect(res.status).to.equal(401);
@@ -280,10 +277,7 @@ describe("REstful API", function(){
       });
       it("failure -- invalid auth (non-admin token)", function(done){
         requester
-        .delete("/profiles")
-        .query({
-          id: 23233
-        })
+        .delete("/profiles/" + validIdQuery)
         .set("Authorization", "Bearer " + regularToken)
         .end(function(err, res){
           expect(res.status).to.equal(401);
@@ -388,13 +382,59 @@ describe("REstful API", function(){
         });
       });
     });
+  });
+
+  describe("/users/{username} route", function(){
+    describe("GET", function(){
+      it("success -- valid query, and auth", function(done){
+        requester
+          .get("/users/" + validUsernameQuery)
+          .set("Authorization", "Bearer " + adminToken)
+          .end(function(err, res){
+            expect(res.status).to.equal(200);
+            done();
+          });
+      });
+      it("failure -- invalid query", function(done){
+        requester
+          .get("/users/" + invalidUsernameQuery)
+          .set("Authorization", "Bearer " + adminToken)
+          .end(function(err, res){
+            expect(res.status).to.equal(400);
+            done();
+          });
+      });
+      it("failure -- no auth", function(done){
+        requester
+          .get("/users/" + validUsernameQuery)
+          .end(function(err, res){
+            expect(res.status).to.equal(401);
+            done();
+          });
+      });
+      it("failure -- invalid auth (bad token)", function(done){
+        requester
+          .get("/users/" + validUsernameQuery)
+          .set("Authorization", "Bearer " + invalidToken)
+          .end(function(err, res){
+            expect(res.status).to.equal(401);
+            done();
+          });
+      });
+      it("failure -- invalid auth (non-admin token)", function(done){
+        requester
+          .get("/users/" + validUsernameQuery)
+          .set("Authorization", "Bearer " + regularToken)
+          .end(function(err, res){
+            expect(res.status).to.equal(401);
+            done();
+          });
+      });
+    });
     describe("PUT", function(){
       it("success -- valid auth, and query", function(done){
         requester
-          .put("/users")
-          .query({
-            username: "sampleuser3"
-          })
+          .put("/users/" + validUsernameQuery)
           .set("Authorization", "Bearer " + adminToken)
           .send({})
           .end(function(err, res){
@@ -402,22 +442,9 @@ describe("REstful API", function(){
             done();
           });
       });
-      it("failure -- missing query", function(done){
-        requester
-        .put("/users")
-        .set("Authorization", "Bearer " + adminToken)
-        .send({})
-        .end(function(err, res){
-          expect(res.status).to.equal(400);
-          done();
-        });
-      });
       it("failure -- invalid query", function(done){
         requester
-        .put("/users")
-        .query({
-          username: "dggdddf"
-        })
+        .put("/users/" + invalidUsernameQuery)
         .set("Authorization", "Bearer " + adminToken)
         .send({})
         .end(function(err, res){
@@ -427,10 +454,7 @@ describe("REstful API", function(){
       });
       it("failure -- missing auth", function(done){
         requester
-        .put("/users")
-        .query({
-          username: "sampleuser3"
-        })
+        .put("/users/" + validUsernameQuery)
         .send({})
         .end(function(err, res){
           expect(res.status).to.equal(401);
@@ -439,10 +463,7 @@ describe("REstful API", function(){
       });
       it("failure -- invalid auth (bad token)", function(done){
         requester
-        .put("/users")
-        .query({
-          username: "sampleuser3"
-        })
+        .put("/users/" + validUsernameQuery)
         .set("Authorization", "Bearer " + invalidToken)
         .send({})
         .end(function(err, res){
@@ -452,10 +473,7 @@ describe("REstful API", function(){
       });
       it("failure -- invalid auth (non-admin token)", function(done){
         requester
-        .put("/users")
-        .query({
-          username: "sampleuser3"
-        })
+        .put("/users/" + validUsernameQuery)
         .set("Authorization", "Bearer " + regularToken)
         .send({})
         .end(function(err, res){
@@ -467,31 +485,16 @@ describe("REstful API", function(){
     describe("DELETE", function(){
       it("success -- valid auth, and query", function(done){
         requester
-          .delete("/users")
-          .query({
-            username: "sampleuser3"
-          })
+          .delete("/users/" + validUsernameQuery)
           .set("Authorization", "Bearer " + adminToken)
           .end(function(err, res){
             expect(res.status).to.equal(200);
             done();
           });
       });
-      it("failure -- missing query", function(done){
-        requester
-        .delete("/users")
-        .set("Authorization", "Bearer " + adminToken)
-        .end(function(err, res){
-          expect(res.status).to.equal(400);
-          done();
-        });
-      });
       it("failure -- invalid query", function(done){
         requester
-        .delete("/users")
-        .query({
-          username: "dggdddf"
-        })
+        .delete("/users/" + invalidUsernameQuery)
         .set("Authorization", "Bearer " + adminToken)
         .end(function(err, res){
           expect(res.status).to.equal(400);
@@ -500,10 +503,7 @@ describe("REstful API", function(){
       });
       it("failure -- missing auth", function(done){
         requester
-        .delete("/users")
-        .query({
-          username: "sampleuser3"
-        })
+        .delete("/users/" + validUsernameQuery)
         .end(function(err, res){
           expect(res.status).to.equal(401);
           done();
@@ -511,10 +511,7 @@ describe("REstful API", function(){
       });
       it("failure -- invalid auth (bad token)", function(done){
         requester
-        .delete("/users")
-        .query({
-          username: "sampleuser3"
-        })
+        .delete("/users/" + validUsernameQuery)
         .set("Authorization", "Bearer " + invalidToken)
         .end(function(err, res){
           expect(res.status).to.equal(401);
@@ -523,10 +520,7 @@ describe("REstful API", function(){
       });
       it("failure -- invalid auth (non-admin token)", function(done){
         requester
-        .delete("/users")
-        .query({
-          username: "sampleuser3"
-        })
+        .delete("/users/" + validUsernameQuery)
         .set("Authorization", "Bearer " + regularToken)
         .end(function(err, res){
           expect(res.status).to.equal(401);

@@ -30,40 +30,56 @@ profileDb.on("open", function(){
 });
 
 var profileRouter = express.Router();
-profileRouter.use("/", function(req, res, next){
+profileRouter.use(function(req, res, next){
   req.__model = profileModel;
   req._model = profileModel.Profile;
   req._schemaFields = profileModel.searchableSchemaFields;
   req._ID = profileModel.ID;
-  req._id = req.query.id;
   req._admin = true;
   next();
 });
-profileRouter.use("/", parser.parseQueryString);
+profileRouter.use(parser.parseQueryString);
+profileRouter.param("id", function(req, res, next, id){
+  req._id = id;
+  next();
+});
 profileRouter.route("/")
   .get(function(req, res, next){
   req._admin = false;
   next();
 })
   .get(auth.authorize, profileRoute.read)
-  .post(auth.authorize, profileRoute.create)
+  .post(auth.authorize, profileRoute.create);
+
+profileRouter.route("/:id")
+  .get(function(req, res, next){
+    req._admin = false;
+    next();
+  })
+  .get(auth.authorize, profileRoute.read)
   .put(auth.authorize, profileRoute.update)
   .delete(auth.authorize, profileRoute.delete);
 
 var userRouter = express.Router();
-userRouter.use("/", function(req, res, next){
+userRouter.use(function(req, res, next){
   req.__model = userModel;
   req._model = userModel.User;
   req._schemaFields = userModel.searchableSchemaFields;
   req._ID = userModel.ID;
-  req._id = req.query.username;
   req._admin = true;
   next();
 });
-userRouter.use("/", parser.parseQueryString);
+userRouter.use(parser.parseQueryString);
+userRouter.param("username", function(req, res, next, username){
+  req._id = username;
+  next();
+})
 userRouter.route("/")
   .get(auth.authorize, userRoute.read)
   .post(auth.authorize, userRoute.create)
+
+userRouter.route("/:username")
+  .get(auth.authorize, userRoute.read)
   .put(auth.authorize, userRoute.update)
   .delete(auth.authorize, userRoute.delete);
 
