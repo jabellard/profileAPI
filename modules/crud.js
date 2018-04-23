@@ -5,10 +5,10 @@ exports.read = function(req, res){
     if(err){
       cosole.log(err);
       res.status(500);
-      res.set({
-        "Content-Type": "text/pain"
+      res.json({
+        message: "Internal Sever Error."
       });
-      res.send("Internal Sever Error.");
+      res.end();
       return;
     }
     else {
@@ -35,10 +35,9 @@ exports.paginate = function(req, res){
     if (err) {
       console.log(err);
       res.status(500);
-      res.set({
-        "Content-Type": "text/plain"
+      res.json({
+        message: "Internal Sever Error."
       });
-      res.send("Internal Sever Error");
       res.end();
     }
     else {
@@ -59,20 +58,20 @@ exports.create = function(req, res){
   var doc = req._doc;
   if(!doc){
     res.status(400);
-    res.set({
-      "Content-Type": "text/plain"
-    })
-    res.send("Bad Request: Invalid document1.");
+    res.json({
+      message: "Bad Request: Invalid document."
+    });
+    res.end();
     return;
   }
   doc.validate(function(err){
     if (err) {
       console.log(err);
       res.status(400);
-      res.set({
-        "Content-Type": "text/plain"
+      res.json({
+        message: "Bad Request: Invalid document."
       });
-      res.send("Bad Request: Invalid document2.");
+      res.end();
     }
     else{
       doc.save(function(err){
@@ -84,25 +83,25 @@ exports.create = function(req, res){
             if (err) {
               console.log(err);
               res.status(500);
-              res.set({
-                "Content-Type": "text/pain"
+              res.json({
+                message: "Internal Sever Error."
               });
-              res.send("Internal Sever Error.");
+              res.end();
             }
             else {
               if (doc) {
                 res.status(400);
-                res.set({
-                  "Content-Type": "text/pain"
-                })
-                res.send("Bad Request: Document with ID " + doc[req._ID] + " already exists.");
+                res.json({
+                  message: "Bad Request: Document with ID " + doc[req._ID] + " already exists."
+                });
+                res.end();
               }
               else {
                 res.status(500);
-                res.set({
-                  "Content-Type": "text/pain"
+                res.json({
+                  message: "Internal Sever Error."
                 });
-                res.send("Internal Sever Error.");
+                res.end();
               }
             }
           });
@@ -110,10 +109,10 @@ exports.create = function(req, res){
         }
         else {
           res.status(200);
-          res.set({
-            "Content-Type": "text/pain"
-          })
-          res.send("Created document with ID " + doc[req._ID] + ".");
+          res.json({
+            message: "Created document with ID " + doc[req._ID] + "."
+          });
+          res.end();
         }
       });
     }
@@ -128,10 +127,10 @@ exports.update = function(req, res){
     if (err) {
       console.log(err);
       res.status(500);
-      res.set({
-        "Content-Type": "text/pain"
+      res.json({
+        message: "Internal Sever Error."
       });
-      res.send("Internal Sever Error.");
+      res.end();
     }
     else {
       if (doc) {
@@ -140,37 +139,37 @@ exports.update = function(req, res){
         } catch (err) {
           console.log(err);
           res.status(500);
-          res.set({
-            "Content-Type": "text/pain"
+          res.json({
+            message: "Internal Sever Error."
           });
-          res.send("Internal Sever Error.");
+          res.end();
         }
 
         doc.validate(function(err){
           if(err){
             console.log(err);
             res.status(400);
-            res.set({
-              "Content-Type": "text/plain"
+            res.json({
+              message: "Bad Request: Invalid document."
             });
-            res.send("Bad Request: Invalid document.");
+            res.end();
           }
           else {
             doc.save(function(err){
               if (err) {
                 console.log(err);
                 res.status(500);
-                res.set({
-                  "Content-Type": "text/pain"
+                res.json({
+                  message: "Internal Sever Error."
                 });
-                res.send("Internal Sever Error.");
+                res.end();
               }
               else {
                 res.status(200);
-                res.set({
-                  "Content-Type": "text/pain"
+                res.json({
+                  message: "Updated document with ID " + req._id + "."
                 });
-                res.send("Updated document with ID " + req._id + ".");
+                res.end();
               }
             });
           }
@@ -179,10 +178,10 @@ exports.update = function(req, res){
       }
       else{
         res.status(400);
-        res.set({
-          "Content-Type": "text/pain"
+        res.json({
+          message: "Bad Request: Document with ID " + req._id + " does not exist."
         });
-        res.send("Bad Request: Document with ID " + req._id + " does not exist.");
+        res.end();
       }
     }
   })
@@ -195,10 +194,10 @@ exports.delete = function(req, res){
     if (err) {
       console.log(err);
       res.status(500);
-      res.set({
-        "Content-Type": "text/pain"
+      res.json({
+        message: "Internal Sever Error."
       });
-      res.send("Internal Sever Error.");
+      res.end();
     }
     else {
       if (doc) {
@@ -206,26 +205,26 @@ exports.delete = function(req, res){
           if (err) {
             console.log(err);
             res.status(500);
-            res.set({
-              "Content-Type": "text/pain"
+            res.json({
+              message: "Internal Sever Error."
             });
-            res.send("Internal Sever Error.");
+            res.end();
           }
           else {
             res.status(200);
-            res.set({
-              "Content-Type": "text/pain"
+            res.json({
+              message: "Removed document with ID " + req._id + "."
             });
-            res.send("Removed document with ID " + req._id + ".");
+            res.end();
           }
         })
       }
       else{
         res.status(400);
-        res.set({
-          "Content-Type": "text/pain"
+        res.json({
+          message: "Document with ID " + req._id + " does not exist."
         });
-        res.send("Document with ID " + req._id + " does not exist.");
+        res.end();
       }
     }
   })

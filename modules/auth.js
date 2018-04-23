@@ -8,10 +8,10 @@ exports.authenticate = function(req, res){
     if(err){
       cosole.log(err);
       res.status(500);
-      res.set({
-        "Content-Type": "text/pain"
+      res.json({
+        message: "Internal Sever Error."
       });
-      res.send("Internal Sever Error.");
+      res.end();
     }
     else {
       if (doc) {
@@ -19,10 +19,10 @@ exports.authenticate = function(req, res){
           if (err) {
             cosole.log(err);
             res.status(500);
-            res.set({
-              "Content-Type": "text/pain"
+            res.json({
+              message: "Internal Sever Error."
             });
-            res.send("Internal Sever Error.");
+            res.end();
           }
           else {
             if (match) {
@@ -38,10 +38,10 @@ exports.authenticate = function(req, res){
                 if (err) {
                   cosole.log(err);
                   res.status(500);
-                  res.set({
-                    "Content-Type": "text/pain"
+                  res.json({
+                    message: "Internal Sever Error."
                   });
-                  res.send("Internal Sever Error.");
+                  res.end();
                 }
                 else {
                   res.status(200);
@@ -54,20 +54,20 @@ exports.authenticate = function(req, res){
             }
             else {
               res.status(401);
-              res.set({
-                "Content-Type": "text/pain"
+              res.json({
+                message: "Invalid password."
               });
-              res.send("Invalid password.");
+              res.end();
             }
           }
         });
       }
       else {
         res.status(401);
-        res.set({
-          "Content-Type": "text/pain"
+        res.json({
+          message: "No user with username " + req.body.username + " exists."
         });
-        res.send("No user with username " + req.body.username + " exists.");
+        res.end();
       }
       }
     });
@@ -77,20 +77,20 @@ exports.authorize = function(req, res, next){
   var authHeader = req.get("authorization");
   if (!authHeader) {
     res.status(401);
-    res.set({
-      "Content-Type": "text/pain"
+    res.json({
+      message: "Unauthorized."
     });
-    res.send("Unauthorized.");
+    res.end();
   }
   else {
     var token = authHeader.split(" ")[1];
     jwt.verify(token, secretKey, function(err, payload){
       if (err) {
         res.status(401);
-        res.set({
-          "Content-Type": "text/pain"
+        res.json({
+          message: "Unauthorized."
         });
-        res.send("Unauthorized.");
+        res.end();
       }
       else {
         if (!payload.admin && req._admin) {
@@ -101,18 +101,18 @@ exports.authorize = function(req, res, next){
             }
             else {
               res.status(401);
-              res.set({
-                "Content-Type": "text/pain"
+              res.json({
+                message: "Unauthorized."
               });
-              res.send("Unauthorized.");
+              res.end();
             }
           }
           else {
             res.status(401);
-            res.set({
-              "Content-Type": "text/pain"
+            res.json({
+              message: "Unauthorized."
             });
-            res.send("Unauthorized.");
+            res.end();
           }
         }
         else {

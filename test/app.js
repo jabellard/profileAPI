@@ -21,7 +21,7 @@ var regularPayload = {
 var regularToken = jwt.sign(regularPayload, secretKey);
 var invalidToken = "fjfj" + regularToken + "dkfdkf";
 
-var validIdQuery = 32760;
+var validIdQuery = 45039;
 var invalidIdQuery = 888888;
 
 var validUsernameQuery = "sampleuser3";

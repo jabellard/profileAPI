@@ -1,5 +1,7 @@
 exports.parseQueryString = function(req, res, next){
-  req._query = {};
+  if(!req._query){
+    req._query = {};
+  }
   var schemaFields = req._schemaFields;
   for(var i = 0; i < schemaFields.length; i++){
     if (req.query[schemaFields[i]]) {

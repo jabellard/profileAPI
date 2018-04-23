@@ -15,20 +15,20 @@ exports.create = function(req, res){
   req._doc = req.__model.toDoc(req.body);
   if(!req._doc){
     res.status(400);
-    res.set({
-      "Content-Type": "text/plain"
-    })
-    res.send("Bad Request: Invalid document.");
+    res.json({
+      message: "Bad Request: Invalid document."
+    });
+    res.end();
   }
   else{
     req._doc.validate(function(err){
       if (err) {
         console.log(err);
         res.status(400);
-        res.set({
-          "Content-Type": "text/plain"
+        res.json({
+          message: "Bad Request: Invalid document."
         });
-        res.send("Bad Request: Invalid document.");
+        res.end();
       }
       else{
         var salt = bcrypt.genSaltSync(5);
@@ -36,10 +36,10 @@ exports.create = function(req, res){
           if (err) {
             console.log(err);
             res.status(500);
-            res.set({
-              "Content-Type": "text/pain"
+            res.json({
+              message: "Internal Sever Error."
             });
-            res.send("Internal Sever Error.");
+            res.end();
           }
           else {
             req._doc.password = hash;

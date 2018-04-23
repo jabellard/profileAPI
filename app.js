@@ -36,11 +36,18 @@ profileRouter.use(function(req, res, next){
   req._schemaFields = profileModel.searchableSchemaFields;
   req._ID = profileModel.ID;
   req._admin = true;
+  if(!req._query){
+    req._query = {};
+  }
   next();
 });
 profileRouter.use(parser.parseQueryString);
 profileRouter.param("id", function(req, res, next, id){
   req._id = id;
+  if(!req._query){
+    req._query = {};
+  }
+  req._query["id"] = id;
   next();
 });
 profileRouter.route("/")
@@ -67,11 +74,18 @@ userRouter.use(function(req, res, next){
   req._schemaFields = userModel.searchableSchemaFields;
   req._ID = userModel.ID;
   req._admin = true;
+  if(!req._query){
+    req._query = {};
+  }
   next();
 });
 userRouter.use(parser.parseQueryString);
 userRouter.param("username", function(req, res, next, username){
   req._id = username;
+  if(!req._query){
+    req._query = {};
+  }
+  req._query["username"] = username;
   next();
 })
 userRouter.route("/")
