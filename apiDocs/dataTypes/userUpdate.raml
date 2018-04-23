@@ -1,0 +1,14 @@
+#%RAML 1.0 DataType
+
+description: User update.
+displayName: UserUpdate
+type: object
+properties:
+  password:
+    required: true
+    type: string
+    minLength: 5
+  admin:
+    required: true
+    type: boolean
+example: !include ../examples/userUpdate.json

@@ -1,0 +1,15 @@
+{
+  "totalDocs": 1,
+  "totalPages": 1,
+  "docsPerPage": 1,
+  "currentPage": 1,
+  "results": [
+    {
+      "firstName": "sampleFirstName",
+      "lastName": "sampleLastName",
+      "age": 30,
+      "gender": "M",
+      "id": "77777"
+    }
+  ]
+}

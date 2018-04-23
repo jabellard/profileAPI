@@ -1,0 +1,10 @@
+#%RAML 1.0 ResourceType
+
+usage: To be applied to any item-based resource.
+type: base
+get?:
+  description: Get a single  <<resourcePathName | !singularize>>.
+put?:
+  description: Update an existing <<resourcePathName | !singularize>>.
+delete?:
+  description: Delete an existing <<resourcePathName | !singularize>>.

@@ -1,0 +1,11 @@
+#%RAML 1.0 DataType
+
+description: Filtered and paged user search results.
+displayName: FilteredAndPagedUserSearchResults
+type: !include ./FilteredAndPagedSearchResults.raml
+properties:
+  results:
+    required: true
+    type: array
+    items: !include ./user.raml
+example: !include ../examples/filteredAndPagedUserSearchResults.json

@@ -1,0 +1,11 @@
+#%RAML 1.0 SecurityScheme
+
+type: x-jwt
+description: JSON Web Token authentication/authorization security scheme.
+displayName: jwt
+describedBy:
+  headers:
+    Authorization:
+      description: |
+        Used to send a string (JSON Web Token included) of the following
+        form: Bearer <jwt>

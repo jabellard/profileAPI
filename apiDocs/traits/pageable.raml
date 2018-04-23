@@ -1,0 +1,15 @@
+#%RAML 1.0 Trait
+
+usage: To be applied to appropriate methods on any resource that is pageable.
+queryParameters:
+  page:
+    description: Page of results to return.
+    required: false
+    type: integer
+    example: 1
+    default: 1
+  limit:
+    description: Number of results per page.
+    required: false
+    type: integer
+    example: 10

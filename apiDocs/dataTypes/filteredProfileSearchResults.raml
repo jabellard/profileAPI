@@ -1,0 +1,11 @@
+#%RAML 1.0 DataType
+
+description: Filtered profile search results.
+displayName: FilteredProfileSearchResults
+type: !include ./filteredSearchResults.raml
+properties:
+  results:
+    required: true
+    type: array
+    items: !include ./profile.raml
+example: !include ../examples/filteredProfilesearchResults.json

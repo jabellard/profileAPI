@@ -1,0 +1,11 @@
+#%RAML 1.0 DataType
+
+description: Filtered and paged profile search results.
+displayName: FilteredAndPagedProfileSearchResults
+type: !include ./FilteredAndPagedSearchResults.raml
+properties:
+  results:
+    required: true
+    type: array
+    items: !include ./profile.raml
+example: !include ../examples/filteredAndPagedProfileSearchResults.json

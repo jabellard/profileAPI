@@ -1,0 +1,31 @@
+#%RAML 1.0 DataType
+
+description: Profile schema.
+displayName: Profile
+type: object
+properties:
+  firstName:
+    required: true
+    type: string
+  lastName:
+    required: true
+    type: string
+  age:
+    required: true
+    type: integer
+    minimum: 1
+  gender:
+    required: true
+    type: string
+    enum:
+      - M
+      - m
+      - F
+      - f
+  id:
+    required: true
+    type: string
+    minLength: 5
+    maxLength: 5
+    pattern: ^\d+$
+example: !include ../examples/profile.json

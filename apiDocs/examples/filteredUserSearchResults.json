@@ -1,0 +1,9 @@
+{
+  "results": [
+    {
+      "username": "sampleUsername",
+      "password": "samplePassword",
+      "admin": false
+    }
+  ]
+}

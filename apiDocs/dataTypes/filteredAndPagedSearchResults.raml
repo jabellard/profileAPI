@@ -1,0 +1,18 @@
+#%RAML 1.0 DataType
+
+description: Filtered and paged search results.
+displayName: FilteredAndPagedSearchResults
+type: object
+properties:
+  totalDocs:
+    required: true
+    type: integer
+  totalPages:
+    required: true
+    type: integer
+  docsPerPage:
+    required: true
+    type: integer
+  currentPage:
+    required: true
+    type: integer

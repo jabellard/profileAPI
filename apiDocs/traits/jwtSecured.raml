@@ -1,0 +1,9 @@
+#%RAML 1.0 Trait
+
+usage: To be applied to any method that must be jwt-authenticated and authorized.
+headers:
+  Authorization:
+    description: Authorization header.
+    required: true
+    type: string
+    example: Bearer <jwt>

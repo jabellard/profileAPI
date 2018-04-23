@@ -1,0 +1,11 @@
+#%RAML 1.0 DataType
+
+description: Filtered user search results.
+displayName: FilteredUserSearchResults
+type: !include ./filteredSearchResults.raml
+properties:
+  results:
+    required: true
+    type: array
+    items: !include ./user.raml
+example: !include ../examples/filteredUserSearchResults.json
