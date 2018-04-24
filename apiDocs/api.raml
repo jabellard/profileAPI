@@ -131,6 +131,7 @@ documentation:
 
 /signup:
   post:
+    description: Sign up for a new account.
     body:
       type: dataTypes_.UserInfo
       example: !include ./examples/userInfo.json
@@ -155,6 +156,7 @@ documentation:
 
 /login:
   post:
+    description: Login in with an existing account.
     body:
       type: dataTypes_.UserInfo
       example: !include ./examples/userInfo.json
@@ -162,8 +164,8 @@ documentation:
       200:
         description: OK.
         body:
-            type: dataTypes_.Message
-            example: !include ./examples/message.json
+            type: dataTypes_.TokenMessage
+            example: !include ./examples/tokenMessage.json
       400:
         description: Bad request.
         body:
@@ -179,6 +181,7 @@ documentation:
 
 /docs:
   get:
+    description: Retrieve this documentation.
     responses:
       200:
         description: OK.

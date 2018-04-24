@@ -125,7 +125,7 @@ docsRouter.use("/", function(req, res, next){
   next();
 });
 docsRouter.route("/")
-  .get(docsRoute.serveHtml);
+  .get(docsRoute.serveDocs);
 
 app.use(bodyParser.json());
 app.use("/profiles", profileRouter);
