@@ -1,6 +1,6 @@
 #%RAML 1.0
 
-title: Profile API
+title: Profile
 description: Profile API.
 version: 1.1.0
 #baseUri:
@@ -54,13 +54,16 @@ documentation:
         example: "77777"
     responses:
       200:
-        #description: OK.
+        description: OK.
         body:
-          application/json:
-            type: dataTypes_.FilteredProfileSearchResults | dataTypes_.FilteredAndPagedProfileSearchResults
-          #type: dataTypes_.FilteredProfileSearchResults
-          #example: !include ./examples/filteredProfileSearchResults.json
+          type: dataTypes_.FilteredProfileSearchResults | dataTypes_.FilteredAndPagedProfileSearchResults
+          examples:
+            FilteredProfileSearchResults: !include ./examples/filteredProfileSearchResults.json
+            FilteredAndPagedProfileSearchResults: !include ./examples/filteredAndPagedProfileSearchResults.json
   post:
+    body:
+      type: dataTypes_.Profile
+      example: !include ./examples/profile.json
   /{id}:
     type: resourceTypes_.Item
     is:
@@ -68,8 +71,60 @@ documentation:
     get:
       responses:
         200:
+          description: OK.
           body:
             type: dataTypes_.FilteredProfileSearchResults
-            #example: !include ./examples/filteredProfileSearchResults.json
+            example: !include ./examples/filteredProfileSearchResults.json
     put:
+      body:
+        type: dataTypes_.ProfileUpdate
+        example: !include ./examples/profileUpdate.json
+    delete:
+
+/users:
+  type: resourceTypes_.Collection
+  is:
+    - traits_.jwtSecured
+  get:
+    is:
+      - traits_.filterable
+      - traits_.pageable
+    queryParameters:
+      username:
+        description: Query by username.
+        type: string
+        required: false
+        example: sampleUserName
+      admin:
+        description: Query by admin credential.
+        type: boolean
+        required: false
+        example: true
+    responses:
+      200:
+        description: OK.
+        body:
+          type: dataTypes_.FilteredUserSearchResults | dataTypes_.FilteredAndPagedUserSearchResults
+          examples:
+            FilteredUserSearchResults: !include ./examples/filteredUserSearchResults.json
+            FilteredAndPagedUserSearchResults: !include ./examples/filteredAndPagedUserSearchResults.json
+  post:
+    body:
+      type: dataTypes_.User
+      example: !include ./examples/user.json
+  /{username}:
+    type: resourceTypes_.Item
+    is:
+      - traits_.jwtSecured
+    get:
+      responses:
+        200:
+          description: OK.
+          body:
+            type: dataTypes_.FilteredUserSearchResults
+            example: !include ./examples/filteredUserSearchResults.json
+    put:
+      body:
+        type: dataTypes_.UserUpdate
+        example: !include ./examples/userUpdate.json
     delete:

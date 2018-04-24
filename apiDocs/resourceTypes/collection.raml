@@ -1,10 +1,7 @@
 #%RAML 1.0 ResourceType
 
-uses:
-  dataTypes_: ../libs/dataTypes.raml
-
 usage: To be applied to any collection-based resource.
-##type: !include !include ./base.raml
+#type: !include ./base.raml
 get?:
   description: Get all the <<resourcePathName>> in the collection.
   responses:
@@ -12,45 +9,44 @@ get?:
       description: Bad request.
       body:
         application/json:
-          type: number
-          #type: !include ../dataTypes/message.raml
-          #example: !include ../#examples/message.json
+          type: !include ../dataTypes/message.raml
+          example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
         application/json:
-          #type: !include ../dataTypes/message.raml
-          #example: !include ../#examples/message.json
+          type: !include ../dataTypes/message.raml
+          example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
         application/json:
-          #type: !include ../dataTypes/message.raml
-          #example: !include ../#examples/message.json
+          type: !include ../dataTypes/message.raml
+          example: !include ../examples/message.json
 post?:
   description: Create a new <<resourcePathName | !singularize>>.
   responses:
     200:
       description: OK.
-        body:
-          application/json:
-            #type: !include ../dataTypes/message.raml
-            #example: !include ../#examples/message.json
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          example: !include ../examples/message.json
     400:
       description: Bad request.
       body:
         application/json:
-          #type: !include ../dataTypes/message.raml
-          #example: !include ../#examples/message.json
+          type: !include ../dataTypes/message.raml
+          example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
         application/json:
-          #type: !include ../dataTypes/message.raml
-          #example: !include ../#examples/message.json
+          type: !include ../dataTypes/message.raml
+          example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
         application/json:
-          #type: !include ../dataTypes/message.raml
-          #example: !include ../#examples/message.json
+          type: !include ../dataTypes/message.raml
+          example: !include ../examples/message.json

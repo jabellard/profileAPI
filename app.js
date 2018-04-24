@@ -120,6 +120,10 @@ loginRouter.route("/")
   .post(loginRoute.login);
 
 var docsRouter = express.Router();
+docsRouter.use("/", function(req, res, next){
+  req.__dirname = __dirname;
+  next();
+});
 docsRouter.route("/")
   .get(docsRoute.serveHtml);
 

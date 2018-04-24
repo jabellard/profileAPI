@@ -1,6 +1,6 @@
 var path = require("path");
 
 exports.serveHtml = function(req, res){
-  res.sendFile(__dirname + "/docs/docs.html");
-  res.end();
+  console.log("in module: " + req.__dirname + "/docs/docs.html");
+  res.sendFile(req.__dirname + "/docs/docs.html");
 }

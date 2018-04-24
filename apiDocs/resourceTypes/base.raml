@@ -2,100 +2,104 @@
 
 usage: To be applied to any collection-based or item-based resource.
 get?:
+  description: Get all the <<resourcePathName>> in the collection.
   responses:
     400:
       description: Bad request.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
 post?:
+  description: Create a new <<resourcePathName | !singularize>>.
   responses:
     200:
       description: OK.
         body:
           application/json:
-            type: ../dataTypes/message.raml
+            type: !include ../dataTypes/message.raml
             example: !include ../examples/message.json
     400:
       description: Bad request.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
 put?:
+  description: Update an existing <<resourcePathName | !singularize>>.
   responses:
     200:
       description: OK.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     400:
       description: Bad request.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
 delete?:
+  description: Delete an existing <<resourcePathName | !singularize>>.
   responses:
     200:
       description: OK.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     400:
       description: Bad request.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
         application/json:
-          type: ../dataTypes/message.raml
+          type: !include ../dataTypes/message.raml
           example: !include ../examples/message.json
