@@ -1,10 +1,79 @@
 #%RAML 1.0 ResourceType
 
 usage: To be applied to any item-based resource.
-type: base
+#type: !include !include ./base.raml
 get?:
   description: Get a single  <<resourcePathName | !singularize>>.
+  responses:
+    400:
+      description: Bad request.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
+    401:
+      description: Unauthorized.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
+    500:
+      description: Internal server error.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
 put?:
   description: Update an existing <<resourcePathName | !singularize>>.
+  responses:
+    200:
+      description: OK.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
+    400:
+      description: Bad request.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
+    401:
+      description: Unauthorized.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
+    500:
+      description: Internal server error.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
 delete?:
   description: Delete an existing <<resourcePathName | !singularize>>.
+  responses:
+    200:
+      description: OK.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
+    400:
+      description: Bad request.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
+    401:
+      description: Unauthorized.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json
+    500:
+      description: Internal server error.
+      body:
+        application/json:
+          type: !include ../dataTypes/message.raml
+          #example: !include ../examples/message.json

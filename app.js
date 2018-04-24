@@ -8,6 +8,7 @@ var userRoute = require("./routes/user");
 var signupRoute = require("./routes/signup");
 var loginRoute = require("./routes/login");
 var indexRoute = require("./routes/index");
+var docsRoute = require("./routes/docs");
 var profileModel = require("./models/profile");
 var userModel = require("./models/user");
 var auth = require("./modules/auth");
@@ -118,11 +119,16 @@ loginRouter.use("/", function(req, res, next){
 loginRouter.route("/")
   .post(loginRoute.login);
 
+var docsRouter = express.Router();
+docsRouter.route("/")
+  .get(docsRoute.serveHtml);
+
 app.use(bodyParser.json());
 app.use("/profiles", profileRouter);
 app.use("/users", userRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
+app.use("/docs", docsRouter);
 
 http.createServer(app).listen(app.get("port"), function(){
   console.log("listening on port " + app.get("port") + " ...");

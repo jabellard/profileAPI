@@ -6,66 +6,96 @@ get?:
     400:
       description: Bad request.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
 post?:
   responses:
+    200:
+      description: OK.
+        body:
+          application/json:
+            type: ../dataTypes/message.raml
+            example: !include ../examples/message.json
     400:
       description: Bad request.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
 put?:
   responses:
+    200:
+      description: OK.
+      body:
+        application/json:
+          type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     400:
       description: Bad request.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
 delete?:
   responses:
+    200:
+      description: OK.
+      body:
+        application/json:
+          type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     400:
       description: Bad request.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     401:
       description: Unauthorized.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
     500:
       description: Internal server error.
       body:
-        application/json
+        application/json:
           type: ../dataTypes/message.raml
+          example: !include ../examples/message.json
