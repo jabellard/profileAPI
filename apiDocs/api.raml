@@ -128,3 +128,27 @@ documentation:
         type: dataTypes_.UserUpdate
         example: !include ./examples/userUpdate.json
     delete:
+
+/signup:
+  post:
+    body:
+      type: dataTypes_.UserInfo
+      example: !include ./examples/userInfo.json
+    responses:
+      200:
+        description: OK.
+        body:
+            type: dataTypes_.Message
+            example: !include ./examples/message.json
+      400:
+        description: Bad request.
+        body:
+          application/json:
+            type: dataTypes_.Message
+            example: !include ./examples/message.json
+      500:
+        description: Internal server error.
+        body:
+          application/json:
+            type: dataTypes_.Message
+            example: !include ./examples/message.json
